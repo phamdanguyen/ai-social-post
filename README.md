@@ -11,6 +11,7 @@ Hệ thống tự động tìm kiếm nội dung trending/viral trên các mạn
 - **Database**: SQL Server / SQLite
 - **APIs**: Facebook Graph API, Zalo API, YouTube Data API, TikTok API
 - **AI Services**: OpenAI (Whisper, GPT-4, DALL-E), Anthropic Claude
+- **Authentication**: OAuth2 (⭐ BẮT BUỘC - Đọc [OAuth2 Analysis](docs/OAUTH2_ANALYSIS.md))
 
 ## Tính Năng Chính
 
@@ -49,8 +50,9 @@ Hệ thống tự động tìm kiếm nội dung trending/viral trên các mạn
 ```
 ai-social-post/
 ├── docs/                           # Tài liệu
-│   ├── SOCIAL_MEDIA_API_RESEARCH.md
-│   ├── CSHARP_IMPLEMENTATION.md
+│   ├── SOCIAL_MEDIA_API_RESEARCH.md    # Nghiên cứu APIs chi tiết
+│   ├── CSHARP_IMPLEMENTATION.md        # Hướng dẫn code C# WinForms
+│   ├── OAUTH2_ANALYSIS.md              # Phân tích OAuth2 (⭐ ĐỌC ĐẦU TIÊN)
 │   └── API_INTEGRATION_GUIDE.md
 │
 ├── src/
@@ -462,6 +464,50 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
 
 - GitHub: [@phamdanguyen](https://github.com/phamdanguyen)
 - Email: your-email@example.com
+
+## 📚 Tài Liệu Quan Trọng
+
+### ⭐ ĐỌC TRƯỚC KHI BẮT ĐẦU
+
+1. **[OAuth2 Analysis](docs/OAUTH2_ANALYSIS.md)** - BẮT BUỘC ĐỌC ĐẦU TIÊN
+   - Tại sao phải dùng OAuth2?
+   - OAuth2 hoạt động như thế nào?
+   - Implementation guide chi tiết cho C# WinForms
+   - Security best practices
+   - Troubleshooting common issues
+
+### Tài Liệu Kỹ Thuật
+
+2. **[Social Media API Research](docs/SOCIAL_MEDIA_API_RESEARCH.md)** (3700+ dòng)
+   - Facebook Graph API v22.0 chi tiết
+   - Zalo API (Social + OA)
+   - YouTube Data API v3 với quota management
+   - TikTok Content Posting API
+   - Trending detection strategies
+   - AI content analysis workflows
+   - Auto-nurturing fanpage strategies
+
+3. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
+   - Layered architecture design
+   - Complete data models với Entity Framework
+   - Social media client implementations
+   - AI service integrations
+   - WinForms UI với dependency injection
+   - Production-ready code examples
+
+### Thứ Tự Đọc Recommended
+
+```
+1. README.md (this file) - Tổng quan
+   ↓
+2. OAUTH2_ANALYSIS.md - Authentication (⭐ QUAN TRỌNG NHẤT)
+   ↓
+3. SOCIAL_MEDIA_API_RESEARCH.md - API details
+   ↓
+4. CSHARP_IMPLEMENTATION.md - Code implementation
+   ↓
+5. Bắt đầu code!
+```
 
 ## Acknowledgments
 
