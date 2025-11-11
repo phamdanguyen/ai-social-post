@@ -49,10 +49,12 @@ Hệ thống tự động tìm kiếm nội dung trending/viral trên các mạn
 
 ```
 ai-social-post/
-├── docs/                           # Tài liệu
-│   ├── SOCIAL_MEDIA_API_RESEARCH.md    # Nghiên cứu APIs chi tiết
-│   ├── CSHARP_IMPLEMENTATION.md        # Hướng dẫn code C# WinForms
-│   ├── OAUTH2_ANALYSIS.md              # Phân tích OAuth2 (⭐ ĐỌC ĐẦU TIÊN)
+├── docs/                                    # Tài liệu
+│   ├── SOCIAL_MEDIA_API_RESEARCH.md         # Nghiên cứu APIs chi tiết
+│   ├── CSHARP_IMPLEMENTATION.md             # Hướng dẫn code C# WinForms
+│   ├── OAUTH2_ANALYSIS.md                   # Phân tích OAuth2 (⭐ ĐỌC ĐẦU TIÊN)
+│   ├── SCHEDULING_AND_TIMING_STRATEGY.md    # Scheduling & AI-powered trends
+│   ├── ENGAGEMENT_AUTOMATION.md             # AI reply, auto comment, auto like
 │   └── API_INTEGRATION_GUIDE.md
 │
 ├── src/
@@ -483,11 +485,28 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
    - Zalo API (Social + OA)
    - YouTube Data API v3 với quota management
    - TikTok Content Posting API
+   - **Twitter/X API** (NEW!)
    - Trending detection strategies
    - AI content analysis workflows
    - Auto-nurturing fanpage strategies
 
-3. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
+3. **[Scheduling & Timing Strategy](docs/SCHEDULING_AND_TIMING_STRATEGY.md)** (8500+ dòng)
+   - Best times to post (Vietnam timezone cho all platforms)
+   - Trend detection frequency (15-30 mins optimal)
+   - **AI-Powered Trend Detection** (Meta AI, Grok, ChatGPT)
+   - Content processing timeline
+   - Smart scheduling system architecture
+   - Platform-specific timing rules
+
+4. **[Engagement Automation](docs/ENGAGEMENT_AUTOMATION.md)** (10000+ dòng)
+   - **AI Comment Reply** - Tự động trả lời comments
+   - **Auto Comment** - Comment vào posts của người khác
+   - **Auto Like** - Tự động like posts/comments
+   - Sentiment analysis & smart routing
+   - Lead capture from comments
+   - Compliance & best practices
+
+5. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
    - Layered architecture design
    - Complete data models với Entity Framework
    - Social media client implementations
@@ -502,11 +521,15 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
    ↓
 2. OAUTH2_ANALYSIS.md - Authentication (⭐ QUAN TRỌNG NHẤT)
    ↓
-3. SOCIAL_MEDIA_API_RESEARCH.md - API details
+3. SOCIAL_MEDIA_API_RESEARCH.md - API details (FB, Zalo, YT, TikTok, X)
    ↓
-4. CSHARP_IMPLEMENTATION.md - Code implementation
+4. SCHEDULING_AND_TIMING_STRATEGY.md - Best times & AI-powered trends
    ↓
-5. Bắt đầu code!
+5. ENGAGEMENT_AUTOMATION.md - AI reply, auto like, auto comment
+   ↓
+6. CSHARP_IMPLEMENTATION.md - Code implementation
+   ↓
+7. Bắt đầu code! 🚀
 ```
 
 ## Acknowledgments
