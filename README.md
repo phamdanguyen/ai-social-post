@@ -506,7 +506,27 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
    - Lead capture from comments
    - Compliance & best practices
 
-5. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
+5. **[Distributed Worker Architecture](docs/DISTRIBUTED_WORKER_ARCHITECTURE.md)** (NEW!)
+   - Worker pattern: 1 post = 1 worker instance
+   - Scalability và fault tolerance
+   - Docker/Kubernetes deployment
+   - Master-worker coordination
+
+6. **[System Architecture & User Stories](docs/SYSTEM_ARCHITECTURE_AND_USER_STORIES.md)** (NEW!)
+   - Complete user personas và journeys
+   - 20+ detailed user stories
+   - High-level system architecture
+   - Component interactions
+   - Implementation phases
+
+7. **[Gemini-First AI Strategy](docs/GEMINI_FIRST_STRATEGY.md)** (⭐ SIMPLIFIED APPROACH)
+   - Dùng Google Gemini làm AI chính
+   - Banana API cho images
+   - Veo 3 cho videos
+   - 47% cost savings vs multi-AI stack
+   - Simpler, faster, easier maintenance
+
+8. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
    - Layered architecture design
    - Complete data models với Entity Framework
    - Social media client implementations
@@ -519,17 +539,25 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
 ```
 1. README.md (this file) - Tổng quan
    ↓
-2. OAUTH2_ANALYSIS.md - Authentication (⭐ QUAN TRỌNG NHẤT)
+2. SYSTEM_ARCHITECTURE_AND_USER_STORIES.md - ⭐ BẮT ĐẦU TỪ ĐÂY!
+   (Hiểu user needs & system design trước khi code)
    ↓
-3. SOCIAL_MEDIA_API_RESEARCH.md - API details (FB, Zalo, YT, TikTok, X)
+3. GEMINI_FIRST_STRATEGY.md - ⭐ AI STRATEGY (SIMPLIFIED!)
+   (Google Gemini + Banana + Veo 3)
    ↓
-4. SCHEDULING_AND_TIMING_STRATEGY.md - Best times & AI-powered trends
+4. OAUTH2_ANALYSIS.md - Authentication (BẮT BUỘC)
    ↓
-5. ENGAGEMENT_AUTOMATION.md - AI reply, auto like, auto comment
+5. SOCIAL_MEDIA_API_RESEARCH.md - API details (FB, Zalo, YT, TikTok, X)
    ↓
-6. CSHARP_IMPLEMENTATION.md - Code implementation
+6. SCHEDULING_AND_TIMING_STRATEGY.md - Best times & AI-powered trends
    ↓
-7. Bắt đầu code! 🚀
+7. ENGAGEMENT_AUTOMATION.md - AI reply, auto like, auto comment
+   ↓
+8. DISTRIBUTED_WORKER_ARCHITECTURE.md - Scalability strategy
+   ↓
+9. CSHARP_IMPLEMENTATION.md - Code implementation
+   ↓
+10. Bắt đầu code! 🚀
 ```
 
 ## Acknowledgments
