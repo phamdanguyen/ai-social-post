@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
 
@@ -42,7 +42,7 @@ jobs:
         echo "3. Click 'Tìm Trends' để bắt đầu" >> release/README.txt
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AiSocialPost-Windows-x64
         path: release/
@@ -59,22 +59,30 @@ jobs:
           ## AI Social Post v${{ github.ref_name }}
 
           ### Tính năng
-          - ✅ Tìm trends tự động (placeholder - sẽ integrate Gemini)
-          - ✅ Tạo content với AI (placeholder)
-          - ✅ Đăng bài lên 5 platforms (placeholder)
-          - ✅ AI reply comments (placeholder)
+          - ✅ Tìm trends tự động (THẬT - dùng Gemini AI)
+          - ✅ Tạo content với AI (THẬT - dùng Gemini 2.0 Flash)
+          - ✅ Đăng bài lên Facebook (THẬT - cần Page Access Token)
+          - ✅ AI reply comments Facebook (THẬT - tự động monitor và reply)
+          - ✅ Lead detection (keywords: giá, mua, order, ship, v.v.)
           - ✅ Rate limiting (10 req/min - tôn trọng Gemini limits)
+          - ⏳ TikTok, YouTube, Zalo, Twitter (chưa implement)
 
           ### Cài đặt
           1. Download file `AiSocialPost.exe`
           2. Download file `appsettings.json`
           3. Đặt 2 files cùng folder
           4. Chạy `AiSocialPost.exe`
+          5. Vào Settings:
+             - Gemini API Key đã có sẵn
+             - Lấy FB Page Access Token từ https://developers.facebook.com/tools/explorer/
+             - Nhập FB Page ID và Page Token
+          6. Click 'Tìm Trends' để bắt đầu!
 
           ### Yêu cầu
           - Windows 10/11
-          - .NET 6 Runtime (hoặc dùng file self-contained)
+          - .NET 6 Runtime (đã có trong file self-contained)
+          - Facebook Page (để test posting)
 
-          **Lưu ý**: Đây là phiên bản MVP với placeholder implementations. Gemini API và platform integrations sẽ được thêm sau.
+          **Xem hướng dẫn chi tiết**: [DOWNLOAD.md](https://github.com/phamdanguyen/ai-social-post/blob/main/DOWNLOAD.md)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
