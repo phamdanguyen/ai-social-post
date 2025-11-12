@@ -1,452 +1,248 @@
-# AI Social Post - Hệ Thống Đăng Bài Tự Động
+# AI Social Post - Tool Đăng Bài Tự Động
 
 ## Tổng Quan
 
-Hệ thống tự động tìm kiếm nội dung trending/viral trên các mạng xã hội, sử dụng AI để phân tích và viết lại nội dung, sau đó tự động đăng bài lên nhiều kênh mạng xã hội.
+Tool đơn giản giúp tự động tìm trend, dùng AI viết lại content, và đăng bài lên các mạng xã hội. Tất cả chạy trên 1 app WinForms duy nhất.
 
 ## Công Nghệ
 
-- **Ngôn ngữ**: C# (.NET Framework 4.8 hoặc .NET 6+)
-- **UI Framework**: WinForms
-- **Database**: SQL Server / SQLite
-- **APIs**: Facebook Graph API, Zalo API, YouTube Data API, TikTok API
-- **AI Services**: OpenAI (Whisper, GPT-4, DALL-E), Anthropic Claude
+- **Ngôn ngữ**: C# (.NET 6+)
+- **UI Framework**: WinForms (Desktop app)
+- **Database**: SQLite (đơn giản, không cần server)
+- **Platforms**: Facebook, TikTok, YouTube, Zalo, Twitter/X
+- **AI**: Google Gemini (chính), Banana API (ảnh), Veo 3 (video)
 - **Authentication**: OAuth2 (⭐ BẮT BUỘC - Đọc [OAuth2 Analysis](docs/OAUTH2_ANALYSIS.md))
 
-## Tính Năng Chính
+## 4 Chức Năng Chính
 
-### 1. Phát Hiện Trending
-- ✅ Tự động theo dõi trends trên TikTok, YouTube, Google Trends
-- ✅ Scoring và ranking trends
-- ✅ Filter theo region (Vietnam focus)
-- ✅ Real-time updates (15 phút/lần)
+### 1. Tự Động Tìm Trend
+- AI phát hiện topic đang hot (dùng Gemini + Google Search)
+- Hỗ trợ 5 platforms: Facebook, TikTok, YouTube, Zalo, Twitter/X
+- Cập nhật mỗi 15-30 phút
+- Hiển thị trend score và độ hot
 
-### 2. Phân Tích Nội Dung
-- ✅ Download video/content từ trending posts
-- ✅ Chuyển đổi video thành text (OpenAI Whisper)
-- ✅ Phân tích nội dung với AI (Claude/GPT-4)
-- ✅ Trích xuất key topics, viral elements
+### 2. AI Viết Lại Content
+- Dùng Google Gemini phân tích nội dung viral
+- Tự động viết lại phù hợp với từng platform
+- Tạo hashtags và caption
+- Tạo ảnh (Banana API) và video (Veo 3) nếu cần
 
-### 3. Tạo Nội Dung Mới
-- ✅ Viết lại content với AI
-- ✅ Tạo hình ảnh với DALL-E/Stable Diffusion
-- ✅ Tạo video clips tự động
-- ✅ Tối ưu cho từng platform
+### 3. Đăng Bài Tự Động
+- Post lên 5 platforms: Facebook, TikTok, YouTube, Zalo, X
+- Tự động chọn thời gian tốt nhất để đăng
+- Hoặc lên lịch đăng theo ý muốn
+- Xử lý lỗi và retry tự động
 
-### 4. Đăng Bài Tự Động
-- ✅ Hỗ trợ 4 platforms: Facebook, Zalo, YouTube, TikTok
-- ✅ Lên lịch đăng bài thông minh
-- ✅ Tự động thêm hashtags
-- ✅ Rate limiting và error handling
-
-### 5. Phân Tích Hiệu Quả
-- ✅ Thu thập metrics (likes, shares, comments, views)
-- ✅ Theo dõi performance theo thời gian
-- ✅ A/B testing
-- ✅ Optimization suggestions
+### 4. AI Trả Lời Comment
+- Tự động theo dõi comments trên bài đăng
+- AI trả lời các câu hỏi đơn giản
+- Phát hiện ý định mua hàng ("giá bao nhiêu?")
+- Tự động like comments
 
 ## Cấu Trúc Dự Án
 
 ```
 ai-social-post/
 ├── docs/                                    # Tài liệu
-│   ├── SOCIAL_MEDIA_API_RESEARCH.md         # Nghiên cứu APIs chi tiết
-│   ├── CSHARP_IMPLEMENTATION.md             # Hướng dẫn code C# WinForms
-│   ├── OAUTH2_ANALYSIS.md                   # Phân tích OAuth2 (⭐ ĐỌC ĐẦU TIÊN)
-│   ├── SCHEDULING_AND_TIMING_STRATEGY.md    # Scheduling & AI-powered trends
-│   ├── ENGAGEMENT_AUTOMATION.md             # AI reply, auto comment, auto like
-│   └── API_INTEGRATION_GUIDE.md
+│   ├── SYSTEM_ARCHITECTURE_AND_USER_STORIES.md  # ⭐ ĐỌC ĐẦU TIÊN
+│   ├── GEMINI_FIRST_STRATEGY.md             # AI strategy (đơn giản)
+│   ├── OAUTH2_ANALYSIS.md                   # OAuth2 (bắt buộc)
+│   ├── SOCIAL_MEDIA_API_RESEARCH.md         # API details
+│   ├── SCHEDULING_AND_TIMING_STRATEGY.md    # Best times to post
+│   └── ENGAGEMENT_AUTOMATION.md             # AI reply comments
 │
 ├── src/
 │   ├── AiSocialPost.sln           # Solution file
 │   │
-│   ├── AiSocialPost.WinForms/     # WinForms UI Project
+│   ├── AiSocialPost.WinForms/     # ⭐ MAIN APP
 │   │   ├── Forms/
-│   │   │   ├── MainForm.cs        # Form chính
-│   │   │   ├── TrendingForm.cs    # Quản lý trends
-│   │   │   ├── ContentForm.cs     # Quản lý content
-│   │   │   ├── ScheduleForm.cs    # Lên lịch đăng bài
-│   │   │   └── AnalyticsForm.cs   # Phân tích metrics
-│   │   ├── Controls/              # Custom controls
+│   │   │   ├── MainForm.cs        # Form chính (tất cả trong 1)
+│   │   │   └── SettingsForm.cs    # Cấu hình API keys
 │   │   └── Resources/             # Images, icons
 │   │
 │   ├── AiSocialPost.Core/         # Business Logic
 │   │   ├── Models/
 │   │   │   ├── TrendingTopic.cs
-│   │   │   ├── ContentSource.cs
-│   │   │   ├── AnalyzedContent.cs
 │   │   │   ├── GeneratedContent.cs
-│   │   │   └── PostedContent.cs
-│   │   ├── Services/
-│   │   │   ├── TrendDetectionService.cs
-│   │   │   ├── ContentAnalysisService.cs
-│   │   │   ├── ContentGenerationService.cs
-│   │   │   ├── SchedulingService.cs
-│   │   │   └── AnalyticsService.cs
-│   │   └── Interfaces/
+│   │   │   └── Comment.cs
+│   │   └── Services/
+│   │       ├── TrendService.cs         # Tìm trends
+│   │       ├── ContentService.cs       # Tạo content
+│   │       ├── PostingService.cs       # Đăng bài
+│   │       └── CommentService.cs       # Reply comments
 │   │
-│   ├── AiSocialPost.SocialMedia/  # Social Media Integrations
-│   │   ├── Facebook/
-│   │   │   ├── FacebookClient.cs
-│   │   │   └── FacebookModels.cs
-│   │   ├── Zalo/
-│   │   │   ├── ZaloClient.cs
-│   │   │   └── ZaloModels.cs
-│   │   ├── YouTube/
-│   │   │   ├── YouTubeClient.cs
-│   │   │   └── YouTubeModels.cs
-│   │   └── TikTok/
-│   │       ├── TikTokClient.cs
-│   │       └── TikTokModels.cs
+│   ├── AiSocialPost.Platforms/    # Platform Clients
+│   │   ├── FacebookClient.cs
+│   │   ├── TikTokClient.cs
+│   │   ├── YouTubeClient.cs
+│   │   ├── ZaloClient.cs
+│   │   └── TwitterClient.cs
 │   │
 │   ├── AiSocialPost.AI/           # AI Services
-│   │   ├── OpenAI/
-│   │   │   ├── WhisperClient.cs
-│   │   │   ├── GPT4Client.cs
-│   │   │   └── DalleClient.cs
-│   │   └── Anthropic/
-│   │       └── ClaudeClient.cs
+│   │   ├── GeminiService.cs       # Google Gemini (chính)
+│   │   ├── BananaService.cs       # Tạo ảnh
+│   │   └── VeoService.cs          # Tạo video
 │   │
-│   ├── AiSocialPost.Data/         # Data Access Layer
-│   │   ├── DbContext/
-│   │   ├── Repositories/
-│   │   └── Migrations/
-│   │
-│   └── AiSocialPost.Common/       # Shared Utilities
-│       ├── Helpers/
-│       ├── Extensions/
-│       └── Constants/
+│   └── AiSocialPost.Data/         # SQLite Database
+│       ├── AppDbContext.cs
+│       └── aisocialpost.db        # SQLite file
 │
-├── tests/                         # Unit Tests
-│   ├── AiSocialPost.Core.Tests/
-│   ├── AiSocialPost.SocialMedia.Tests/
-│   └── AiSocialPost.AI.Tests/
-│
-├── examples/                      # Code Examples
-│   ├── FacebookPostExample.cs
-│   ├── ZaloMessageExample.cs
-│   ├── YouTubeUploadExample.cs
-│   └── TikTokPostExample.cs
-│
-└── config/                        # Configuration Files
-    ├── appsettings.json
-    └── platforms.json
+└── config/
+    └── appsettings.json           # API keys và settings
 ```
 
 ## Yêu Cầu Hệ Thống
 
-### Development
 - Windows 10/11
 - Visual Studio 2022
-- .NET Framework 4.8 hoặc .NET 6+
-- SQL Server 2019+ hoặc SQLite
-
-### Runtime
-- Windows 10/11
-- .NET Framework 4.8 hoặc .NET 6+ Runtime
-- 4GB RAM minimum (8GB recommended)
-- 20GB disk space
+- .NET 6+
+- 4GB RAM
 - Internet connection
+- SQLite (tự động tạo, không cần cài gì thêm)
 
 ## NuGet Packages Cần Thiết
 
 ```xml
-<!-- HTTP Client -->
-<PackageReference Include="RestSharp" Version="110.2.0" />
+<!-- HTTP & JSON -->
 <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
-<!-- Facebook SDK -->
-<PackageReference Include="Facebook" Version="7.0.6" />
-
-<!-- Google APIs -->
-<PackageReference Include="Google.Apis.YouTube.v3" Version="1.63.0.3152" />
-<PackageReference Include="Google.Apis.Auth" Version="1.63.0" />
-
-<!-- Database -->
-<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
-<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+<!-- Database (SQLite) -->
 <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.14" />
 
-<!-- OpenAI -->
-<PackageReference Include="OpenAI" Version="1.10.0" />
-
-<!-- Anthropic Claude -->
-<PackageReference Include="Anthropic.SDK" Version="1.0.0" />
-
-<!-- Video Processing -->
-<PackageReference Include="MediaToolkit" Version="1.1.0.1" />
-<PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
-
-<!-- Job Scheduling -->
-<PackageReference Include="Quartz" Version="3.8.0" />
-<PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.8.0" />
-
-<!-- Logging -->
-<PackageReference Include="Serilog" Version="3.1.1" />
-<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+<!-- Google APIs (YouTube, Gemini) -->
+<PackageReference Include="Google.Apis.YouTube.v3" Version="1.63.0.3152" />
+<PackageReference Include="Google.Apis.Auth" Version="1.63.0" />
+<PackageReference Include="Google.GenerativeAI" Version="1.0.0" />
 
 <!-- Configuration -->
-<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
 <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 ```
 
 ## Cài Đặt
 
-### 1. Clone Repository
+### 1. Clone và Mở Project
 ```bash
 git clone https://github.com/phamdanguyen/ai-social-post.git
-cd ai-social-post
-```
-
-### 2. Mở Solution trong Visual Studio
-```bash
-cd src
+cd ai-social-post/src
 start AiSocialPost.sln
 ```
 
-### 3. Restore NuGet Packages
-```
-Tools > NuGet Package Manager > Restore NuGet Packages
-```
+### 2. Cấu Hình API Keys
 
-### 4. Cấu Hình Database
-
-**Option 1: SQL Server**
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=AiSocialPost;Trusted_Connection=True;"
-  }
-}
-```
-
-**Option 2: SQLite**
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Data Source=aisocialpost.db"
-  }
-}
-```
-
-### 5. Cấu Hình API Keys
-
-Tạo file `appsettings.json` trong folder config:
+Tạo file `config/appsettings.json`:
 
 ```json
 {
-  "ApiKeys": {
-    "OpenAI": {
-      "ApiKey": "your-openai-api-key",
-      "Organization": "your-org-id"
-    },
-    "Anthropic": {
-      "ApiKey": "your-anthropic-api-key"
-    },
-    "Facebook": {
-      "AppId": "your-fb-app-id",
-      "AppSecret": "your-fb-app-secret",
-      "PageAccessToken": "your-page-access-token"
-    },
-    "YouTube": {
-      "ClientId": "your-google-client-id",
-      "ClientSecret": "your-google-client-secret"
-    },
-    "TikTok": {
-      "ClientKey": "your-tiktok-client-key",
-      "ClientSecret": "your-tiktok-client-secret"
-    },
-    "Zalo": {
-      "AppId": "your-zalo-app-id",
-      "SecretKey": "your-zalo-secret-key"
-    }
+  "Google": {
+    "ApiKey": "your-gemini-api-key",
+    "YouTubeClientId": "your-youtube-client-id",
+    "YouTubeClientSecret": "your-youtube-client-secret"
   },
-  "Settings": {
-    "TrendDetectionInterval": 15,
-    "MaxTrendsToProcess": 10,
-    "EnableAutoPosting": false,
-    "RequireManualApproval": true
+  "Facebook": {
+    "AppId": "your-fb-app-id",
+    "AppSecret": "your-fb-app-secret"
+  },
+  "TikTok": {
+    "ClientKey": "your-tiktok-client-key",
+    "ClientSecret": "your-tiktok-client-secret"
+  },
+  "Zalo": {
+    "AppId": "your-zalo-app-id",
+    "SecretKey": "your-zalo-secret-key"
+  },
+  "Twitter": {
+    "ApiKey": "your-twitter-api-key",
+    "ApiSecret": "your-twitter-api-secret"
+  },
+  "Banana": {
+    "ApiKey": "your-banana-api-key"
   }
 }
 ```
 
-### 6. Chạy Database Migrations
-```bash
-dotnet ef database update --project src/AiSocialPost.Data
+### 3. Build và Run
+```
+F5 trong Visual Studio
 ```
 
-### 7. Build và Run
-```
-F5 hoặc Ctrl+F5
-```
+Database (SQLite) sẽ tự động tạo khi chạy lần đầu.
 
 ## Hướng Dẫn Sử Dụng
 
-### 1. Khởi Động Lần Đầu
+### 1. Kết Nối Accounts
 
-1. Mở ứng dụng
-2. Vào **Settings** → **API Configuration**
-3. Nhập API keys cho các services
-4. Click **Test Connections** để verify
-5. Click **Save**
+1. Mở app, click **Settings**
+2. Nhập API keys đã có
+3. Click **Connect** cho từng platform (Facebook, TikTok, YouTube, Zalo, Twitter)
+4. Follow OAuth flow
 
-### 2. Kết Nối Social Media Accounts
+### 2. Tìm Trends
 
-1. Vào **Social Media** → **Connect Accounts**
-2. Chọn platform (Facebook/Zalo/YouTube/TikTok)
-3. Click **Authorize** và follow OAuth flow
-4. Verify connection thành công
+1. Click **Tìm Trends**
+2. Xem danh sách trends AI phát hiện
+3. Chọn trend muốn sử dụng
 
-### 3. Bắt Đầu Theo Dõi Trends
+### 3. Tạo Content
 
-1. Vào **Trending** tab
-2. Click **Start Monitoring**
-3. Xem danh sách trends được phát hiện
-4. Filter theo platform, region, category
+1. Click **Tạo Content** từ trend đã chọn
+2. AI sẽ phân tích và viết lại
+3. Review và edit nếu cần
+4. Chọn platforms để đăng (có thể chọn nhiều)
 
-### 4. Phân Tích và Tạo Content
+### 4. Đăng Bài
 
-1. Trong **Trending** tab, chọn một trend
-2. Click **Analyze Content**
-3. Xem kết quả phân tích
-4. Click **Generate Content**
-5. Review generated content cho từng platform
-6. Edit nếu cần thiết
+1. Click **Đăng Ngay** hoặc **Lên Lịch**
+2. Nếu lên lịch, chọn thời gian (hoặc để AI chọn thời gian tốt nhất)
+3. Chờ đăng thành công
 
-### 5. Lên Lịch Đăng Bài
+### 5. AI Trả Lời Comments
 
-1. Vào **Schedule** tab
-2. Chọn content đã generate
-3. Chọn platforms để đăng
-4. Chọn thời gian đăng (hoặc dùng AI suggest)
-5. Click **Schedule**
+- Tự động chạy background
+- Xem comments đã reply trong tab **Comments**
+- Có thể tắt/bật auto-reply trong Settings
 
-### 6. Theo Dõi Performance
-
-1. Vào **Analytics** tab
-2. Xem overview metrics
-3. Click vào specific posts để xem detail
-4. Export reports nếu cần
-
-## Workflow Tự Động
-
-Khi enable **Auto Mode**:
+## Workflow Đơn Giản
 
 ```
-[Mỗi 15 phút]
-1. Phát hiện trends mới
+1. AI tìm trends (mỗi 15-30 phút)
    ↓
-2. Analyze top content từ trends
+2. Bạn chọn trend muốn dùng
    ↓
-3. Generate content cho tất cả platforms
+3. AI viết lại content
    ↓
-4. [Nếu RequireManualApproval = false]
-   Auto schedule posts
+4. Bạn review và edit (nếu muốn)
    ↓
-5. Post vào thời điểm đã schedule
+5. Chọn platforms và đăng
    ↓
-6. Collect metrics mỗi giờ trong 24h đầu
+6. AI tự động reply comments
 ```
 
-## Tính Năng Nâng Cao
+## Chi Phí Ước Tính
 
-### 1. Custom Templates
-- Tạo templates cho từng loại content
-- Variables: {topic}, {hashtags}, {date}
-- Platform-specific templates
+### API Costs (Monthly - Usage Vừa Phải)
 
-### 2. A/B Testing
-- Test multiple versions của cùng content
-- Auto-select winner dựa trên metrics
-- Learn và optimize theo thời gian
+- **Google Gemini**: ~$150/tháng (trend detection + content generation)
+- **Banana API**: ~$100/tháng (tạo ảnh)
+- **Veo 3**: ~$200/tháng (tạo video - optional)
 
-### 3. Audience Targeting
-- Define target audience cho từng platform
-- Optimize content cho audience
-- Best time to post suggestions
+**Total**: ~$450/tháng (hoặc $250/tháng nếu không dùng video)
 
-### 4. Content Calendar
-- Visual calendar view
-- Drag-drop scheduling
-- Bulk operations
-- Export/import
-
-### 5. Team Collaboration
-- Multiple user accounts
-- Role-based permissions
-- Approval workflows
-- Activity logs
-
-## Troubleshooting
-
-### API Connection Issues
-1. Check internet connection
-2. Verify API keys
-3. Check rate limits
-4. Review error logs in `logs/` folder
-
-### Content Generation Fails
-1. Check OpenAI/Claude API quota
-2. Verify API key validity
-3. Check content length limits
-4. Review error messages
-
-### Posting Fails
-1. Verify platform authentication
-2. Check content compliance với platform policies
-3. Verify rate limits
-4. Check file size limits (cho videos)
-
-## Chi Phí Vận Hành
-
-### Ước Tính Monthly Costs
-
-#### AI APIs
-- OpenAI Whisper: ~$90/tháng
-- GPT-4 Turbo: ~$450/tháng
-- DALL-E: ~$60/tháng
-- **Total AI**: ~$600/tháng
-
-#### Infrastructure
-- SQL Server (optional): $0-50/tháng
-- Storage: $10-50/tháng
-- **Total Infra**: ~$10-100/tháng
-
-**Total Estimated**: $610-700/tháng cho moderate usage
-
-### Cost Optimization Tips
-1. Sử dụng GPT-3.5 thay vì GPT-4 cho simple tasks
-2. Cache transcript results
-3. Batch processing
-4. Set daily spending limits
+### Lưu Ý
+- Chi phí phụ thuộc vào usage
+- Có thể bỏ Veo 3 nếu không cần video
+- Gemini rẻ hơn nhiều so với GPT-4
 
 ## Roadmap
 
-### Version 1.0 (MVP) - Q1 2025
-- [x] Research APIs
-- [ ] Basic UI với WinForms
-- [ ] Facebook integration
-- [ ] Simple trending detection
-- [ ] Manual posting
+### Version 1.0 (MVP) - 8 tuần
+- [x] Research APIs & Architecture
+- [ ] WinForms UI (MainForm + SettingsForm)
+- [ ] OAuth2 cho 5 platforms
+- [ ] Gemini integration (trend + content)
+- [ ] Đăng bài cơ bản
+- [ ] AI reply comments
 
-### Version 1.5 - Q2 2025
-- [ ] TikTok integration
-- [ ] AI content generation
-- [ ] Auto scheduling
-- [ ] Basic analytics
-
-### Version 2.0 - Q3 2025
-- [ ] YouTube integration
-- [ ] Zalo integration
-- [ ] Advanced analytics
-- [ ] A/B testing
-- [ ] Team collaboration
-
-### Version 2.5 - Q4 2025
-- [ ] Mobile app companion
-- [ ] Advanced AI features
-- [ ] Custom video generation
-- [ ] White label option
+**Chỉ làm MVP thôi. Không làm thêm tính năng phức tạp.**
 
 ## Đóng Góp
 
@@ -467,106 +263,26 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
 - GitHub: [@phamdanguyen](https://github.com/phamdanguyen)
 - Email: your-email@example.com
 
-## 📚 Tài Liệu Quan Trọng
+## 📚 Tài Liệu
 
-### ⭐ ĐỌC TRƯỚC KHI BẮT ĐẦU
+### Đọc Theo Thứ Tự
 
-1. **[OAuth2 Analysis](docs/OAUTH2_ANALYSIS.md)** - BẮT BUỘC ĐỌC ĐẦU TIÊN
-   - Tại sao phải dùng OAuth2?
-   - OAuth2 hoạt động như thế nào?
-   - Implementation guide chi tiết cho C# WinForms
-   - Security best practices
-   - Troubleshooting common issues
+1. **[README.md](README.md)** (file này) - Tổng quan
+2. **[SYSTEM_ARCHITECTURE_AND_USER_STORIES.md](docs/SYSTEM_ARCHITECTURE_AND_USER_STORIES.md)** - User stories & kiến trúc đơn giản
+3. **[GEMINI_FIRST_STRATEGY.md](docs/GEMINI_FIRST_STRATEGY.md)** - AI strategy (Gemini + Banana + Veo)
+4. **[OAUTH2_ANALYSIS.md](docs/OAUTH2_ANALYSIS.md)** - OAuth2 (bắt buộc đọc)
+5. **[SOCIAL_MEDIA_API_RESEARCH.md](docs/SOCIAL_MEDIA_API_RESEARCH.md)** - API details
+6. **[SCHEDULING_AND_TIMING_STRATEGY.md](docs/SCHEDULING_AND_TIMING_STRATEGY.md)** - Best times to post
+7. **[ENGAGEMENT_AUTOMATION.md](docs/ENGAGEMENT_AUTOMATION.md)** - AI reply comments
 
-### Tài Liệu Kỹ Thuật
+**Lưu ý**: Các tài liệu trên có thể chứa tính năng nâng cao, nhưng chỉ implement **4 chức năng cốt lõi** như đã mô tả trong README này.
 
-2. **[Social Media API Research](docs/SOCIAL_MEDIA_API_RESEARCH.md)** (3700+ dòng)
-   - Facebook Graph API v22.0 chi tiết
-   - Zalo API (Social + OA)
-   - YouTube Data API v3 với quota management
-   - TikTok Content Posting API
-   - **Twitter/X API** (NEW!)
-   - Trending detection strategies
-   - AI content analysis workflows
-   - Auto-nurturing fanpage strategies
+## Credits
 
-3. **[Scheduling & Timing Strategy](docs/SCHEDULING_AND_TIMING_STRATEGY.md)** (8500+ dòng)
-   - Best times to post (Vietnam timezone cho all platforms)
-   - Trend detection frequency (15-30 mins optimal)
-   - **AI-Powered Trend Detection** (Meta AI, Grok, ChatGPT)
-   - Content processing timeline
-   - Smart scheduling system architecture
-   - Platform-specific timing rules
-
-4. **[Engagement Automation](docs/ENGAGEMENT_AUTOMATION.md)** (10000+ dòng)
-   - **AI Comment Reply** - Tự động trả lời comments
-   - **Auto Comment** - Comment vào posts của người khác
-   - **Auto Like** - Tự động like posts/comments
-   - Sentiment analysis & smart routing
-   - Lead capture from comments
-   - Compliance & best practices
-
-5. **[Distributed Worker Architecture](docs/DISTRIBUTED_WORKER_ARCHITECTURE.md)** (NEW!)
-   - Worker pattern: 1 post = 1 worker instance
-   - Scalability và fault tolerance
-   - Docker/Kubernetes deployment
-   - Master-worker coordination
-
-6. **[System Architecture & User Stories](docs/SYSTEM_ARCHITECTURE_AND_USER_STORIES.md)** (NEW!)
-   - Complete user personas và journeys
-   - 20+ detailed user stories
-   - High-level system architecture
-   - Component interactions
-   - Implementation phases
-
-7. **[Gemini-First AI Strategy](docs/GEMINI_FIRST_STRATEGY.md)** (⭐ SIMPLIFIED APPROACH)
-   - Dùng Google Gemini làm AI chính
-   - Banana API cho images
-   - Veo 3 cho videos
-   - 47% cost savings vs multi-AI stack
-   - Simpler, faster, easier maintenance
-
-8. **[C# Implementation Guide](docs/CSHARP_IMPLEMENTATION.md)** (2000+ dòng)
-   - Layered architecture design
-   - Complete data models với Entity Framework
-   - Social media client implementations
-   - AI service integrations
-   - WinForms UI với dependency injection
-   - Production-ready code examples
-
-### Thứ Tự Đọc Recommended
-
-```
-1. README.md (this file) - Tổng quan
-   ↓
-2. SYSTEM_ARCHITECTURE_AND_USER_STORIES.md - ⭐ BẮT ĐẦU TỪ ĐÂY!
-   (Hiểu user needs & system design trước khi code)
-   ↓
-3. GEMINI_FIRST_STRATEGY.md - ⭐ AI STRATEGY (SIMPLIFIED!)
-   (Google Gemini + Banana + Veo 3)
-   ↓
-4. OAUTH2_ANALYSIS.md - Authentication (BẮT BUỘC)
-   ↓
-5. SOCIAL_MEDIA_API_RESEARCH.md - API details (FB, Zalo, YT, TikTok, X)
-   ↓
-6. SCHEDULING_AND_TIMING_STRATEGY.md - Best times & AI-powered trends
-   ↓
-7. ENGAGEMENT_AUTOMATION.md - AI reply, auto like, auto comment
-   ↓
-8. DISTRIBUTED_WORKER_ARCHITECTURE.md - Scalability strategy
-   ↓
-9. CSHARP_IMPLEMENTATION.md - Code implementation
-   ↓
-10. Bắt đầu code! 🚀
-```
-
-## Acknowledgments
-
-- OpenAI cho Whisper, GPT-4, DALL-E
-- Anthropic cho Claude
-- Facebook, YouTube, TikTok, Zalo cho APIs
-- Tất cả contributors và testers
+- Google Gemini cho AI
+- Banana API cho image generation
+- Facebook, YouTube, TikTok, Zalo, Twitter cho APIs
 
 ---
 
-**Note**: Đây là research project. Vui lòng tuân thủ tất cả terms of service của các platforms và respect copyright laws.
+**Note**: Tool đơn giản cho personal use. Vui lòng tuân thủ terms of service của platforms.
