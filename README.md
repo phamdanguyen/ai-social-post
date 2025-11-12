@@ -18,7 +18,7 @@ Tool đơn giản giúp tự động tìm trend, dùng AI viết lại content, 
 ### 1. Tự Động Tìm Trend
 - AI phát hiện topic đang hot (dùng Gemini + Google Search)
 - Hỗ trợ 5 platforms: Facebook, TikTok, YouTube, Zalo, Twitter/X
-- Cập nhật mỗi 15-30 phút
+- Cập nhật mỗi tuần (hoặc manual khi cần)
 - Hiển thị trend score và độ hot
 
 ### 2. AI Viết Lại Content
@@ -204,7 +204,7 @@ Database (SQLite) sẽ tự động tạo khi chạy lần đầu.
 ## Workflow Đơn Giản
 
 ```
-1. AI tìm trends (mỗi 15-30 phút)
+1. AI tìm trends (1 lần/tuần hoặc manual)
    ↓
 2. Bạn chọn trend muốn dùng
    ↓

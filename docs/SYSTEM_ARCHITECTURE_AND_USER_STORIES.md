@@ -41,14 +41,15 @@ Tool đơn giản để:
 **US-001: Tự Động Phát Hiện Trends**
 ```
 AS A Marketing Manager
-I WANT AI to detect trending topics automatically
-SO THAT I can create relevant content quickly
+I WANT AI to detect trending topics
+SO THAT I can create relevant content
 
 Acceptance Criteria:
-- AI checks trends every 15-30 minutes
+- AI checks trends weekly (or manual trigger)
 - Shows trend score (0-100)
 - Supports 5 platforms: Facebook, TikTok, YouTube, Zalo, X
 - Filters by Vietnam region
+- Can manually refresh trends anytime
 ```
 
 **US-002: AI Tạo Content**
@@ -300,10 +301,11 @@ Acceptance Criteria:
 ### 4.2 Core Components
 
 #### 1. TrendService
-- Fetch trends from platforms
+- Fetch trends from platforms (weekly schedule or manual)
 - Use Gemini to analyze
 - Score and rank
 - Store in SQLite
+- Manual refresh button available
 
 #### 2. ContentService
 - Analyze viral content (Gemini)
