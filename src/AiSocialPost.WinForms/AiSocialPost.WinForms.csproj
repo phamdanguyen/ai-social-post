@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyName>AiSocialPost</AssemblyName>
+    <Product>AI Social Post</Product>
+    <Version>1.0.0</Version>
+    <Authors>Pham Dang Nguyen</Authors>
+    <Description>Tool đăng bài tự động lên các mạng xã hội với AI</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AiSocialPost.Core\AiSocialPost.Core.csproj" />
+    <ProjectReference Include="..\AiSocialPost.Data\AiSocialPost.Data.csproj" />
+    <ProjectReference Include="..\AiSocialPost.AI\AiSocialPost.AI.csproj" />
+    <ProjectReference Include="..\AiSocialPost.Platforms\AiSocialPost.Platforms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
