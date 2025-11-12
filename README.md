@@ -11,7 +11,7 @@ Tool đơn giản giúp tự động tìm trend, dùng AI viết lại content, 
 - **Database**: SQLite (đơn giản, không cần server)
 - **Platforms**: Facebook, TikTok, YouTube, Zalo, Twitter/X
 - **AI**: Google Gemini (chính), Banana API (ảnh), Veo 3 (video)
-- **Authentication**: OAuth2 (⭐ BẮT BUỘC - Đọc [OAuth2 Analysis](docs/OAUTH2_ANALYSIS.md))
+- **Authentication**: Manual Page Access Tokens (simplified, no OAuth2 server needed)
 
 ## 4 Chức Năng Chính
 
@@ -247,21 +247,26 @@ Nếu dùng free tier:
 ## Roadmap
 
 ### Version 1.0 (MVP) - 8 tuần
-- [x] Research APIs & Architecture
+- [x] Research APIs & Architecture ✅ **DONE**
 - [x] WinForms UI (MainForm + SettingsForm) ✅ **DONE**
 - [x] SQLite database + Entity Framework ✅ **DONE**
 - [x] Core services & interfaces ✅ **DONE**
 - [x] GeminiRateLimiter (10 req/min) ✅ **DONE**
 - [x] GitHub Actions auto-build ✅ **DONE**
-- [ ] OAuth2 cho 5 platforms (Week 2-3)
-- [ ] Gemini API integration (Week 4-5)
-- [ ] Platform posting implementations (Week 6-7)
-- [ ] AI reply comments (Week 6-7)
-- [ ] Testing & polish (Week 8)
+- [x] Gemini API integration (trend detection + content generation) ✅ **DONE**
+- [x] Facebook posting implementation (manual Page Access Token) ✅ **DONE**
+- [x] Facebook comment monitoring + AI replies ✅ **DONE**
+- [x] Lead detection từ keywords ✅ **DONE**
+- [ ] TikTok, YouTube, Zalo, Twitter posting (Week 4-5)
+- [ ] Scheduling system (Week 6)
+- [ ] Full OAuth2 flow (optional - hiện tại dùng manual tokens)
+- [ ] Testing & polish (Week 7-8)
 
-**Status**: Week 1 Foundation ✅ Complete!
+**Status**: Week 3 Complete! ✅ Gemini AI và Facebook đã hoạt động thật!
 
 **Download**: Check [GitHub Actions](https://github.com/phamdanguyen/ai-social-post/actions) để download bản build mới nhất!
+
+**Hướng dẫn sử dụng**: Xem [DOWNLOAD.md](DOWNLOAD.md) để biết cách lấy Facebook Page Access Token và cấu hình.
 
 ## Đóng Góp
 

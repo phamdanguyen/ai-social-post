@@ -34,47 +34,59 @@ File .exe sẽ nằm trong: `src/AiSocialPost.WinForms/bin/Release/net6.0/win-x6
 
 1. Chạy `AiSocialPost.exe`
 2. Click nút **Settings**
-3. Nhập API keys (tùy chọn):
-   - **Gemini API Key** (chính)
-   - Facebook App ID/Secret
-   - TikTok Client Key
-   - YouTube Client ID
-   - Zalo App ID
-   - Twitter API Key
-   - Banana API Key
-4. Click **Lưu**
+3. Nhập API keys (bắt buộc để sử dụng tính năng):
+   - **Gemini API Key** (bắt buộc cho AI) - Đã có sẵn: `AIzaSyAQOaTnPMPc9YEdEViXBjUKX9s0x8VS8_w`
+   - **FB Page ID** (bắt buộc cho Facebook posting) - VD: `123456789012345`
+   - **FB Page Token** (bắt buộc cho Facebook posting) - Lấy từ [Graph API Explorer](https://developers.facebook.com/tools/explorer/)
+   - TikTok Client Key (chưa implement)
+   - YouTube Client ID (chưa implement)
+   - Zalo App ID (chưa implement)
+   - Twitter API Key (chưa implement)
+   - Banana API Key (chưa implement)
+4. Click **Lưu** và khởi động lại app
+
+#### Cách lấy Facebook Page Access Token:
+1. Vào https://developers.facebook.com/tools/explorer/
+2. Chọn "Get Token" → "Get Page Access Token"
+3. Chọn Page của bạn
+4. Copy token và paste vào Settings
+5. **Lưu ý**: Token này có thời hạn, cần renew định kỳ
 
 ### Bước 2: Tìm Trends
 
 1. Click nút **Tìm Trends**
-2. Xem danh sách trends (hiện tại là sample data)
+2. Xem danh sách trends (sử dụng Gemini AI phân tích trends thực tế tại Vietnam)
 3. Click chọn 1 trend
 
 ### Bước 3: Tạo Content
 
 1. Click **Tạo Content**
-2. Xem content AI tạo (hiện tại là placeholder)
+2. Xem content AI tạo (sử dụng Gemini AI tạo nội dung chất lượng cao)
 3. Edit nếu muốn
 
 ### Bước 4: Đăng Bài
 
-1. Chọn platforms (Facebook, TikTok, YouTube, Zalo, Twitter)
-2. Click **Đăng Ngay** hoặc **Lên Lịch**
-3. Chờ đăng thành công (hiện tại là placeholder)
+1. Chọn platforms (Facebook đã hoạt động, còn lại là placeholder)
+2. Click **Đăng Ngay** để đăng lên Facebook
+3. Chờ đăng thành công (Facebook posting thật, các platform khác chưa implement)
 
 ---
 
 ## ⚠️ Lưu Ý - MVP Version
 
-**Phiên bản hiện tại (Week 1 Foundation)** chỉ có:
+**Phiên bản hiện tại** có:
 - ✅ UI hoàn chỉnh
 - ✅ SQLite database
-- ✅ Rate limiting (10 req/min)
-- ❌ Chưa có OAuth2 (Week 2-3)
-- ❌ Chưa integrate Gemini API thật (Week 4-5)
-- ❌ Chưa đăng bài thật lên platforms (Week 6-7)
+- ✅ Rate limiting (10 req/min cho Gemini)
+- ✅ Gemini AI integration (trend detection + content generation)
+- ✅ Facebook posting (thật, cần Page Access Token)
+- ✅ Facebook comment monitoring với AI replies
+- ✅ Lead detection từ keywords (giá, mua, order, ship, v.v.)
+- ❌ OAuth2 flow (dùng manual token thay thế)
+- ❌ TikTok, YouTube, Zalo, Twitter posting (chưa implement)
+- ❌ Scheduling (chỉ đăng ngay)
 
-**Tất cả đều là PLACEHOLDER** - chỉ để test UI và workflow!
+**Facebook đã hoạt động thật!** Các platform khác vẫn là placeholder.
 
 ---
 
@@ -96,9 +108,11 @@ Nếu gặp lỗi, tạo issue tại: https://github.com/phamdanguyen/ai-social-
 ## 📅 Lộ Trình Phát Triển
 
 - [x] **Week 1**: Foundation (UI, Database, Services) ✅ DONE
-- [ ] **Week 2-3**: OAuth2 cho 5 platforms
-- [ ] **Week 4-5**: Gemini API integration
-- [ ] **Week 6-7**: Platform posting implementations
+- [x] **Week 2**: Gemini API integration ✅ DONE
+- [x] **Week 3**: Facebook posting & comment monitoring ✅ DONE
+- [ ] **Week 4-5**: TikTok, YouTube posting implementations
+- [ ] **Week 6**: Zalo, Twitter posting implementations
+- [ ] **Week 7**: Scheduling system
 - [ ] **Week 8**: Testing & polish
 
-**Check lại sau 2 tuần để có phiên bản với OAuth2!**
+**Hiện tại đã có Gemini AI và Facebook posting thật!**
