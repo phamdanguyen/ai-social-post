@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AiSocialPost.AI\AiSocialPost.AI.csproj" />
+    <ProjectReference Include="..\AiSocialPost.Data\AiSocialPost.Data.csproj" />
+    <ProjectReference Include="..\AiSocialPost.Platforms\AiSocialPost.Platforms.csproj" />
   </ItemGroup>
 
 </Project>

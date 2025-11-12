@@ -18,6 +18,8 @@ namespace AiSocialPost.WinForms.Forms
             txtGeminiApiKey.Text = _configuration["Google:ApiKey"] ?? "";
             txtFacebookAppId.Text = _configuration["Facebook:AppId"] ?? "";
             txtFacebookAppSecret.Text = _configuration["Facebook:AppSecret"] ?? "";
+            txtFacebookPageId.Text = _configuration["Facebook:PageId"] ?? "";
+            txtFacebookPageAccessToken.Text = _configuration["Facebook:PageAccessToken"] ?? "";
             txtTikTokClientKey.Text = _configuration["TikTok:ClientKey"] ?? "";
             txtYouTubeClientId.Text = _configuration["Google:YouTubeClientId"] ?? "";
             txtZaloAppId.Text = _configuration["Zalo:AppId"] ?? "";
@@ -43,6 +45,8 @@ namespace AiSocialPost.WinForms.Forms
                 config.Facebook = config.Facebook ?? new System.Dynamic.ExpandoObject();
                 config.Facebook.AppId = txtFacebookAppId.Text;
                 config.Facebook.AppSecret = txtFacebookAppSecret.Text;
+                config.Facebook.PageId = txtFacebookPageId.Text;
+                config.Facebook.PageAccessToken = txtFacebookPageAccessToken.Text;
 
                 config.TikTok = config.TikTok ?? new System.Dynamic.ExpandoObject();
                 config.TikTok.ClientKey = txtTikTokClientKey.Text;

@@ -6,6 +6,8 @@ namespace AiSocialPost.WinForms.Forms
         private TextBox txtGeminiApiKey;
         private TextBox txtFacebookAppId;
         private TextBox txtFacebookAppSecret;
+        private TextBox txtFacebookPageId;
+        private TextBox txtFacebookPageAccessToken;
         private TextBox txtTikTokClientKey;
         private TextBox txtYouTubeClientId;
         private TextBox txtZaloAppId;
@@ -36,6 +38,8 @@ namespace AiSocialPost.WinForms.Forms
             this.txtGeminiApiKey = new TextBox();
             this.txtFacebookAppId = new TextBox();
             this.txtFacebookAppSecret = new TextBox();
+            this.txtFacebookPageId = new TextBox();
+            this.txtFacebookPageAccessToken = new TextBox();
             this.txtTikTokClientKey = new TextBox();
             this.txtYouTubeClientId = new TextBox();
             this.txtZaloAppId = new TextBox();
@@ -90,6 +94,25 @@ namespace AiSocialPost.WinForms.Forms
             this.txtFacebookAppSecret.Location = new Point(textBoxX, yPos - 3);
             this.txtFacebookAppSecret.Size = new Size(textBoxWidth, 25);
             this.txtFacebookAppSecret.UseSystemPasswordChar = true;
+            yPos += 35;
+
+            var lblFacebookPageId = new Label();
+            lblFacebookPageId.Location = new Point(20, yPos);
+            lblFacebookPageId.Size = new Size(labelWidth, 20);
+            lblFacebookPageId.Text = "FB Page ID:";
+            this.txtFacebookPageId.Location = new Point(textBoxX, yPos - 3);
+            this.txtFacebookPageId.Size = new Size(textBoxWidth, 25);
+            this.txtFacebookPageId.PlaceholderText = "123456789012345";
+            yPos += 35;
+
+            var lblFacebookToken = new Label();
+            lblFacebookToken.Location = new Point(20, yPos);
+            lblFacebookToken.Size = new Size(labelWidth, 20);
+            lblFacebookToken.Text = "FB Page Token:";
+            this.txtFacebookPageAccessToken.Location = new Point(textBoxX, yPos - 3);
+            this.txtFacebookPageAccessToken.Size = new Size(textBoxWidth, 25);
+            this.txtFacebookPageAccessToken.UseSystemPasswordChar = true;
+            this.txtFacebookPageAccessToken.PlaceholderText = "Từ Graph API Explorer";
             yPos += 40;
 
             // TikTok
@@ -157,6 +180,10 @@ namespace AiSocialPost.WinForms.Forms
             this.Controls.Add(this.txtFacebookAppId);
             this.Controls.Add(lblFacebookSecret);
             this.Controls.Add(this.txtFacebookAppSecret);
+            this.Controls.Add(lblFacebookPageId);
+            this.Controls.Add(this.txtFacebookPageId);
+            this.Controls.Add(lblFacebookToken);
+            this.Controls.Add(this.txtFacebookPageAccessToken);
             this.Controls.Add(this.lblTikTok);
             this.Controls.Add(this.txtTikTokClientKey);
             this.Controls.Add(this.lblYouTube);
