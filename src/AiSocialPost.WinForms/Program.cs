@@ -54,7 +54,12 @@ namespace AiSocialPost.WinForms
 
             // AI Services
             services.AddSingleton<GeminiRateLimiter>();
-            services.AddScoped<GeminiService>();
+            services.AddScoped<GeminiService>(sp =>
+            {
+                var rateLimiter = sp.GetRequiredService<GeminiRateLimiter>();
+                var apiKey = Configuration["Google:ApiKey"] ?? "";
+                return new GeminiService(rateLimiter, apiKey);
+            });
 
             // Core Services
             services.AddScoped<ITrendService, TrendService>();

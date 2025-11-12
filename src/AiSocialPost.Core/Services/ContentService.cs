@@ -1,5 +1,6 @@
 using AiSocialPost.Core.Models;
 using AiSocialPost.Data;
+using AiSocialPost.AI;
 using Microsoft.EntityFrameworkCore;
 
 namespace AiSocialPost.Core.Services
@@ -7,22 +8,26 @@ namespace AiSocialPost.Core.Services
     public class ContentService : IContentService
     {
         private readonly AppDbContext _dbContext;
+        private readonly GeminiService _geminiService;
 
-        public ContentService(AppDbContext dbContext)
+        public ContentService(AppDbContext dbContext, GeminiService geminiService)
         {
             _dbContext = dbContext;
+            _geminiService = geminiService;
         }
 
         public async Task<GeneratedContent> GenerateContentAsync(TrendingTopic trend)
         {
-            // TODO: Implement Gemini-powered content generation
-            // For now, create sample content
+            // Use Gemini to generate real content
+            var postContent = await _geminiService.GeneratePostFromTrendAsync(trend.Topic, trend.Platform);
+            var hashtags = await _geminiService.GenerateHashtagsAsync(postContent);
+
             var content = new GeneratedContent
             {
                 TrendId = trend.Id,
                 Platform = trend.Platform,
-                Text = $"[Sample Content] Bài viết về {trend.Topic}\n\nĐây là nội dung được tạo tự động bởi AI. Nội dung này sẽ được thay thế bởi Gemini API trong tương lai.",
-                Hashtags = $"#AI #Trend #{trend.Platform}",
+                Text = postContent,
+                Hashtags = hashtags,
                 Status = "Draft",
                 CreatedAt = DateTime.Now
             };
