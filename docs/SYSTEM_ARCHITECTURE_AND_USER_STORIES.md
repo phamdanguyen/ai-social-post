@@ -302,16 +302,18 @@ Acceptance Criteria:
 
 #### 1. TrendService
 - Fetch trends from platforms (weekly schedule or manual)
-- Use Gemini to analyze
+- Use Gemini to analyze (with rate limiting)
 - Score and rank
 - Store in SQLite
 - Manual refresh button available
+- **Rate Limit**: Max 10 requests/minute to Gemini
 
 #### 2. ContentService
 - Analyze viral content (Gemini)
 - Generate content variations (Gemini)
 - Create images (Banana API)
 - Create videos (Veo 3 - optional)
+- **Rate Limit**: Queue requests, max 10/minute
 
 #### 3. PostingService
 - Post to platforms via OAuth2
@@ -365,6 +367,78 @@ public class Comment
 
 ---
 
+### 4.4 Rate Limiting Strategy
+
+**Gemini API Limits** (Free Tier):
+- 15 requests/minute (RPM)
+- 1 million tokens/minute (TPM)
+- 1,500 requests/day (RPD)
+
+**Our Implementation** (Safety Margin):
+```csharp
+public class GeminiRateLimiter
+{
+    private const int MaxRequestsPerMinute = 10;  // Safety: 10 instead of 15
+    private Queue<DateTime> _requestTimestamps = new();
+
+    public async Task WaitIfNeededAsync()
+    {
+        // Remove timestamps older than 1 minute
+        var oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
+        while (_requestTimestamps.Count > 0 &&
+               _requestTimestamps.Peek() < oneMinuteAgo)
+        {
+            _requestTimestamps.Dequeue();
+        }
+
+        // If at limit, wait
+        if (_requestTimestamps.Count >= MaxRequestsPerMinute)
+        {
+            var oldestRequest = _requestTimestamps.Peek();
+            var waitTime = oldestRequest.AddMinutes(1) - DateTime.UtcNow;
+            if (waitTime > TimeSpan.Zero)
+            {
+                await Task.Delay(waitTime);
+            }
+        }
+
+        // Record this request
+        _requestTimestamps.Enqueue(DateTime.UtcNow);
+    }
+}
+```
+
+**Error Handling**:
+```csharp
+public async Task<string> CallGeminiWithRetryAsync(string prompt)
+{
+    int maxRetries = 3;
+    int delayMs = 1000;
+
+    for (int i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            await _rateLimiter.WaitIfNeededAsync();
+            return await _geminiClient.GenerateAsync(prompt);
+        }
+        catch (RateLimitException)
+        {
+            if (i == maxRetries - 1) throw;
+            await Task.Delay(delayMs * (i + 1));  // Exponential backoff
+        }
+    }
+}
+```
+
+**Benefits**:
+- ✅ Tôn trọng terms of service
+- ✅ Tránh bị block/throttle
+- ✅ App stable và predictable
+- ✅ Có thể dùng free tier an toàn
+
+---
+
 ## PHẦN 5: IMPLEMENTATION PLAN
 
 ### MVP - 8 Weeks
@@ -382,11 +456,14 @@ public class Comment
 **Week 5-6: AI Integration**
 - Gemini for trend detection
 - Gemini for content generation
+- **GeminiRateLimiter** implementation (10 req/min)
 - Basic comment monitoring
 
 **Week 7-8: Polish & Testing**
 - Auto-reply logic
 - Scheduling
+- Rate limiting testing (verify không vượt quá 10/min)
+- Error handling & retry logic
 - Bug fixes
 - Testing
 
@@ -397,6 +474,7 @@ public class Comment
 - ✅ Post to platforms
 - ✅ AI reply comments
 - ✅ Basic scheduling
+- ✅ **Rate limiting** (10 req/min to Gemini) - Tôn trọng API limits
 
 ---
 

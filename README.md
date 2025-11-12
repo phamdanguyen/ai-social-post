@@ -227,10 +227,22 @@ Database (SQLite) sẽ tự động tạo khi chạy lần đầu.
 
 **Total**: ~$450/tháng (hoặc $250/tháng nếu không dùng video)
 
+### Gemini Free Tier (Alternative)
+Nếu dùng free tier:
+- **15 requests/minute** (RPM)
+- **1 million tokens/minute** (TPM)
+- **1,500 requests/day** (RPD)
+
+**⚠️ QUAN TRỌNG**: App có **rate limiting** để tôn trọng limits của Gemini:
+- Tự động queue requests
+- Retry với exponential backoff khi hit limit
+- Không vượt quá 10 requests/minute (safety margin)
+
 ### Lưu Ý
 - Chi phí phụ thuộc vào usage
 - Có thể bỏ Veo 3 nếu không cần video
 - Gemini rẻ hơn nhiều so với GPT-4
+- **Luôn tôn trọng rate limits** để tránh bị block
 
 ## Roadmap
 
