@@ -248,13 +248,20 @@ Nếu dùng free tier:
 
 ### Version 1.0 (MVP) - 8 tuần
 - [x] Research APIs & Architecture
-- [ ] WinForms UI (MainForm + SettingsForm)
-- [ ] OAuth2 cho 5 platforms
-- [ ] Gemini integration (trend + content)
-- [ ] Đăng bài cơ bản
-- [ ] AI reply comments
+- [x] WinForms UI (MainForm + SettingsForm) ✅ **DONE**
+- [x] SQLite database + Entity Framework ✅ **DONE**
+- [x] Core services & interfaces ✅ **DONE**
+- [x] GeminiRateLimiter (10 req/min) ✅ **DONE**
+- [x] GitHub Actions auto-build ✅ **DONE**
+- [ ] OAuth2 cho 5 platforms (Week 2-3)
+- [ ] Gemini API integration (Week 4-5)
+- [ ] Platform posting implementations (Week 6-7)
+- [ ] AI reply comments (Week 6-7)
+- [ ] Testing & polish (Week 8)
 
-**Chỉ làm MVP thôi. Không làm thêm tính năng phức tạp.**
+**Status**: Week 1 Foundation ✅ Complete!
+
+**Download**: Check [GitHub Actions](https://github.com/phamdanguyen/ai-social-post/actions) để download bản build mới nhất!
 
 ## Đóng Góp
 
